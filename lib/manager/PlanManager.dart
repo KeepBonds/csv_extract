@@ -5,7 +5,7 @@ class PlanManager {
   static bool get isFree => getState()._isFree;
 
   PlanManager._internal() {
-    _isFree = true;
+    _isFree = false;
   }
 
   static PlanManager getState() {

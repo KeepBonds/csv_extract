@@ -25,30 +25,46 @@ class BandsTableCell extends StatelessWidget {
           color: color.withOpacity(0.7),
           child: BandsTableCellStructure(
             antennaData: datas,
+            band: band,
+            antennaNumber: antennaNumber,
             child: Text(antenna.average!.toStringAsFixed(1), style: SettingsManager.getState().valueStyle),
           ),
         ),
       );
     }
 
-    String value = difference > 1 ? "PASS" : difference.toStringAsFixed(1);
+
+    Widget child;
+    if(difference > 1) {
+      child = Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("PASS", style: SettingsManager.getState().valueStyle,),
+          Text(difference.toStringAsFixed(1), style: SettingsManager.getState().valueStyle.copyWith(fontSize: ((SettingsManager.getState().valueStyle.fontSize??14)-3)))
+        ],
+      );
+    } else {
+      String value = difference.toStringAsFixed(1);
+      if(value == "0.0") {
+        value = "0.1";
+      }
+      if(value == "-0.0") {
+        value = "-0.1";
+      }
+      child = Text(value, style: SettingsManager.getState().valueStyle,);
+    }
     // To avoid confusion, we avoid displaying 0.0 and -0.0,
     // so we round it to the above value only in those case
-    if(value == "0.0") {
-      value = "0.1";
-    }
-    if(value == "-0.0") {
-      value = "-0.1";
-    }
+
 
     return SizedBox.expand(
       child: Container(
         color: color,
         child: BandsTableCellStructure(
-          child: Text(value, style: SettingsManager.getState().valueStyle,),
           antennaData: datas,
           band: band,
           antennaNumber: antennaNumber,
+          child: child,
         ),
       ),
     );

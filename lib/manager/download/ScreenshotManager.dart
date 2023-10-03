@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:ui' as ui;
-import 'dart:html' show AnchorElement;
+import 'package:universal_html/html.dart' show AnchorElement;
 import 'package:csv_extract/object/DirectoryData.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +39,9 @@ class ScreenshotManager {
     ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
     if (byteData != null) {
       String titleName = parentFolder.replaceAll(" ", "_").replaceAll(",", "");
+      if(SettingsManager.getState().isShowData) {
+        titleName = "${titleName}_showData";
+      }
       await writeFile(byteData, '${DirectoryExtractManager.directoryPath}$titleName.png');
 
       print("SAVE: " + '${DirectoryExtractManager.directoryPath}$titleName.png');

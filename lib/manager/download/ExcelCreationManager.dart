@@ -63,15 +63,19 @@ class ExcelCreationManager {
     if(fileBytes != null) {
       int lastIndex = data.directory.lastIndexOf("/");
       String dir = data.directory.substring(0, lastIndex);
-      String file = data.directory.substring(lastIndex, data.directory.length).replaceAll(" ", "_").replaceAll(",", "") + ".xlsx";
+      String file = data.directory.substring(lastIndex, data.directory.length).replaceAll(" ", "_").replaceAll(",", "");
 
+      String fileName = "$file.xlsx";
+      if(SettingsManager.getState().isShowData) {
+        fileName = "${file}_showData.xlsx";
+      }
 
-      File(dir+file)
+      File(dir+fileName)
         ..createSync()
         ..writeAsBytesSync(fileBytes);
-      print("SAVED " +dir+file);
+      print("SAVED " +dir+fileName);
       Fluttertoast.showToast(
-          msg: dir+file + " SAVED !",
+          msg: dir+fileName + " SAVED !",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 1,
@@ -289,6 +293,9 @@ class ExcelCreationManager {
       String directory = DirectoryExtractManager.directoryPath;
       String time = DateFormat("yyyyMMdd_HH_mm_ss").format(DateTime.now());
       String file = "compare_$time.xlsx";
+      if(SettingsManager.getState().isShowData) {
+        file = "compare_showData_$time.xlsx";
+      }
 
       File(directory + file)
         ..createSync()

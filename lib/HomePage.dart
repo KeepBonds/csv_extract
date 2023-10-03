@@ -363,7 +363,7 @@ class _HomePageView extends WidgetView<HomePage, _HomePageController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: SplitModeHelper.getMode(context) ? 700:null,
+                  width: SplitModeHelper.getMode(context) ? 700 : MediaQuery.of(context).size.width,
                   alignment: Alignment.topCenter,
                   child: state.loading ?
                   const Center(
