@@ -75,7 +75,7 @@ class FileDataManager {
         meanColumn: meanColumn,
         frequencyColumn: frequencyColumn,
         antennaColumn: antennaColumn,
-        antennaNumber: int.tryParse(gridSize[0]) ?? -1
+        antennaNumber: gridSize.isEmpty ? -1 : (int.tryParse(gridSize[0]) ?? -1)
     );
     return fileData;
   }
