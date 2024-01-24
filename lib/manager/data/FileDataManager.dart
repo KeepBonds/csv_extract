@@ -33,6 +33,7 @@ class FileDataManager {
     final RegExp regex = RegExp(r'NPT_(B\d+|n\d+)_(\d+x\d+)');
     final RegExpMatch? match = regex.firstMatch(fileName);
     if(match != null) {
+      print("NTP: $fileName");
       band = match.group(1)!;
       gridSize = match.group(2)!;
     }
@@ -41,6 +42,7 @@ class FileDataManager {
     final RegExp regex2 = RegExp(r'IMEI.*_(B\d+|n\d+)');
     final RegExpMatch? match2 = regex2.firstMatch(fileName);
     if(match2 != null) {
+      print("IMEI: $fileName");
       band = match2.group(1)!;
     }
 
@@ -50,7 +52,7 @@ class FileDataManager {
     }
 
     String? nameFrequency = findFrequency(fileName);
-
+    print("nameFrequency: $nameFrequency");
     List<List<String>> rows = [];
     if(data.length == 1) { // case where all data is inside a [[]] list and rows are separated by \n
       rows = processOneRow(data);
@@ -121,9 +123,9 @@ class FileDataManager {
     List<List<String>> rows = [];
     for (var element in data) {
       List<String> row = [];
-      element.forEach((element2) {
+      for (var element2 in element) {
         row.add(element2.toString());
-      });
+      }
       rows.add(row);
     }
     return rows;

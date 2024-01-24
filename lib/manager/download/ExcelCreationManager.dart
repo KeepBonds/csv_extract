@@ -161,19 +161,16 @@ class ExcelCreationManager {
     }
 
     double difference = spec - antenna!.average!;
-    String value = difference > 1 ? "PASS" : difference.toStringAsFixed(1);
+    String value = difference.toStringAsFixed(1);
 
     cell.value = value;
     if(difference > 1) { // x < spec-1 | ie below -96
       cell.cellStyle = cellStyle(getHexaColor(ColorEnum.green));
     } else if(difference > 0) { // spec-1 < x < spec | ie between -96 & -95
-      print(difference.toString() + " - " + " light green");
       cell.cellStyle = cellStyle(getHexaColor(ColorEnum.lightGreen));;
     } else if(difference > -1) { // spec < x < spec+1 | ie between -95 & -94
-      print(difference.toString() + " - " + " yellow");
       cell.cellStyle = cellStyle(getHexaColor(ColorEnum.yellow));
     } else {    // above x > spec+1 | ie -94
-      print(difference.toString() + " - " + " red");
       cell.cellStyle = cellStyle(getHexaColor(ColorEnum.red));
     }
   }
